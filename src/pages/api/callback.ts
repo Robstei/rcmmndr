@@ -48,7 +48,7 @@ export default async function handler(
     body: params,
   });
   const data = await response.json();
-  console.log(data);
+  // TODO: Save token in a way that allows for more users
   access_token = data.access_token;
   res.redirect("/");
   /*   req.post(authOptions, function (error, response, body) {

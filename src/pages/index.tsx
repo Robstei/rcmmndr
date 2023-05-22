@@ -30,9 +30,8 @@ export default function HomePage() {
 
   return (
     <>
-    <h1>mi_tinderr</h1>
+    <h1>mi_tinder</h1>
       { (token === '') ? <Login/> : <WebPlayback token={token} /> }
-
     </>
   );
 }

@@ -14,7 +14,7 @@ function WebPlayback(props) {
   const [is_paused, setPaused] = useState(false);
   const [is_active, setActive] = useState(false);
   const [current_track, setTrack] = useState(track);
-    const [device_id, setDeviceId] = useState(null)
+  const [device_id, setDeviceId] = useState(null)
 
   useEffect(() => {
     {
@@ -74,8 +74,27 @@ function WebPlayback(props) {
     fetch("https://api.spotify.com/v1/me/player", {
       method: "PUT",
       headers: { Authorization: `Bearer ${props.token} `, "Content-Type": "application/json" },
-      body:JSON.stringify({"device_ids":[device_id]})
+      body: JSON.stringify({ "device_ids": [device_id] })
     });
+  }
+
+  async function setTime() {
+    const trackData = await fetch("https://api.spotify.com/v1/me/player/currently-playing", { headers: { Authorization: `Bearer ${props.token} ` } })
+    const trackJson = await trackData.json()
+    const trackId = trackJson.item.id
+    const trackAudioData = await fetch(`https://api.spotify.com/v1/audio-analysis/${trackId}`, { headers: { Authorization: `Bearer ${props.token} ` } })
+    const trackAudioDataJson = await trackAudioData.json()
+    const sections = trackAudioDataJson.sections
+    player.seek(sections[2].start * 1000)
+  }
+
+  async function getRecomendations(){
+    const trackData = await fetch("https://api.spotify.com/v1/me/player/currently-playing", { headers: { Authorization: `Bearer ${props.token} ` } })
+    const trackJson = await trackData.json()
+    const trackId = trackJson.item.id
+    const recommendationsRaw = await fetch(`https://api.spotify.com/v1/recommendations?seed_tracks=${trackId}`, { headers: { Authorization: `Bearer ${props.token} ` } })
+    const recommendations = await recommendationsRaw.json()
+    console.log(recommendations)
   }
 
   return (
@@ -127,6 +146,9 @@ function WebPlayback(props) {
         &gt;&gt;
       </button>
       <button onClick={takeControl}>take Control</button>
+      <button onClick={setTime}>Set to Interesting Time</button>
+      <button onClick={getRecomendations}>Get Recomendations</button>
+
     </>
   );
 }

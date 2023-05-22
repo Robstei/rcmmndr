@@ -1,5 +1,7 @@
-export default function handler(req, res) {
-  let scope = "streaming user-read-email user-read-private";
+import { NextApiRequest, NextApiResponse } from "next";
+
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
+  let scope = "streaming user-read-email user-read-private user-read-currently-playing";
 
   let state = generateRandomString(16);
 
