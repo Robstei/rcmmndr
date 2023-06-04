@@ -1,0 +1,4 @@
+track_id,title,artist,album,acousticness,danceability,energy,instrumentalness,key,speechiness,tempo,valence,sec1_tempo,sec1_tempo_confidence,sec1_key,sec1_key_confidence,sec1_mode,sec1_mode_confidence,sec1_duration,sec1_start
+1hkm127hnTSa2xjGNw8IAE,Disease,['Beartooth'],Disease,0.00202,0.525,0.957,3.25e-06,0,0.0689,97.445,0.456,97.472,0.348,10,0.588,0,0.471,40.63504,19.8974
+0iVSLUaLzYPi1vDFTkjZhb,"god save me, but don't drown me out",['YUNGBLUD'],weird!,0.00115,0.373,0.871,0.0,2,0.0622,127.413,0.201,126.912,0.16,6,0.422,0,0.548,29.27998,4.24667
+6FxIFdX1jeJYwPozaeqaZj,Like That,['Stand Atlantic'],Pink Elephant,0.0007,0.572,0.953,0.0,4,0.0494,131.979,0.388,132.042,0.381,4,0.257,0,0.0,44.53808,8.40715
