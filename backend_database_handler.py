@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 import pandas as pd
 import sklearn
 import os
@@ -47,7 +47,6 @@ else:
     audio_analysis = sp.audio_analysis(track_id)        # Abrufen der Section features -> Features der Signifikanten Stelle
     speechiness = audio_features[0]['speechiness']
     sections = audio_analysis['sections']
-
     sig_sec = sections[1]
 
     data_current = pd.DataFrame({
