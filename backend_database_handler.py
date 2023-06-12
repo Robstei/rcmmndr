@@ -70,11 +70,9 @@ else:
                         'sec1_mode_confidence':[sig_sec['mode_confidence']],
                         'sec1_duration':[sig_sec['duration']],
                         'sec1_start':[sig_sec['start']],
-
-
                         })
     
     data = pd.concat([data, data_current], ignore_index=True)   # Zusammenfügen der beiden DataFrames
-    data.to_csv('database_songs.csv', index = False)    #Save Sample Data
+    data.to_csv('database_songs.csv', index = False)    #Save
 
 print(data)
