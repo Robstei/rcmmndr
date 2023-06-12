@@ -87,14 +87,18 @@ def write_database():
             print("\n\n")
 
 def get_liked_songs():
-    results = sp.current_user_saved_tracks()
-    track_id = []
-     # Iteration durch die Ergebnisse und Ausgabe der Songdetails
-    for item in results['items']:
-        track_id_temp = item['track']['id']
-        track_id.append(track_id_temp)
+    results = sp.current_user_saved_tracks(limit=50)  # Anzahl der Songs pro Seite (maximal 50)
+
+    track_ids = []
+    while results:
+        items = results['items']
+        for item in items:
+            track = item['track']
+            track_ids.append(track['id'])
         
-    return (track_id)
+        results = sp.next(results)  # Nächste Seite abrufen -> wieder 50 neue IDs laden und abspeichern bis ende
+
+    return track_ids
     
 
 def write_multiple_songs(song_array):
@@ -146,7 +150,6 @@ while True:         # Für mich zum handlen, Aufruf der Funktion muss über Fron
     write_database()
     like = get_liked_songs()
     write_multiple_songs(like)
-    print(like)
     time.sleep(20)
     """
     liked_songs = get_liked_songs()
