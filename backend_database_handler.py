@@ -12,9 +12,8 @@ redirect_uri = 'http://localhost:3000/api/callback'  # This should match the URI
                                                                                                                                                       
     # Klappt parallel zur Web SDK Player
     # Authenticate with Spotify API using OAuth2
-scope = 'user-read-currently-playing'  # Add any additional scopes required
+scope = 'user-read-currently-playing user-library-read'  # Add any additional scopes required
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id, client_secret=client_secret, redirect_uri=redirect_uri, scope=scope))
-
 
 def write_database():
 
@@ -47,7 +46,6 @@ def write_database():
     else:
         audio_features = sp.audio_features(track_id)        # Abrufen der Audio Features -> Overall Track analyse 
         audio_analysis = sp.audio_analysis(track_id)        # Abrufen der Section features -> Features der Signifikanten Stelle
-        speechiness = audio_features[0]['speechiness']
         sections = audio_analysis['sections']
         sig_sec = sections[1]
 
@@ -80,7 +78,7 @@ def write_database():
         data.to_csv('database_songs.csv', index = False)    #Save
 
         ausgabe = True          # True -> printen der Datenbank , false -> nichts printen
-        if ausgabe == True:
+        if ausgabe == False:
             print(data,"\n\n\n")
             print(data.info(), "\n\n\n")
             print(data.describe(),"\n\n\n")
@@ -88,10 +86,17 @@ def write_database():
         else:
             print("\n\n")
 
-
+def write_liked_songs():
+    results = sp.current_user_saved_tracks()
+     # Iteration durch die Ergebnisse und Ausgabe der Songdetails
+    for idx, item in enumerate(results['items']):
+        track = item['track']
+        track_name = track['name']
+        artist_name = track['artists'][0]['name']
+        print(f'{idx + 1}. {track_name} - {artist_name}')
 
 
 while True:         # Für mich zum handlen, Aufruf der Funktion muss über Frontend erfolgen 
     time.sleep(10)  # 10 Sekunden pause, bevor der code erneut gerunnt wird
     write_database()
-    
+    write_liked_songs()
