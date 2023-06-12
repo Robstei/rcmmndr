@@ -24,3 +24,24 @@ track_id,title,artist,album,acousticness,danceability,energy,instrumentalness,ke
 3pC8tmz3WHMdXSmU7M5ajj,Times Like These - Lee “Scratch” Perry x Subatomic Sound System Dub,"['Jack Johnson', 'Lee ""Scratch"" Perry', 'Subatomic Sound System']",In Between Dub,0.365,0.735,0.631,0.202,1,0.0811,141.989,0.641,142.099,0.577,1,0.407,0,0.494,22.80631,8.07137
 2xluJG2nDkkLeeb4qSiEqQ,PRESSURE,['Machine Gun Kelly'],PRESSURE,0.0689,0.508,0.59,0.000157,1,0.253,160.069,0.249,137.392,0.499,1,0.59,1,0.451,13.51319,15.80535
 6N7NO9Z1Hi6la8dqG3Aoew,Lost at Sea,"['Rob Grant', 'Lana Del Rey']",Lost At Sea,0.957,0.142,0.188,0.67,3,0.0344,167.87,0.114,84.164,0.295,3,0.404,0,0.525,17.8216,5.07874
+2gTdDMpNxIRFSiu7HutMCg,I Think I'm OKAY (with YUNGBLUD & Travis Barker),"['Machine Gun Kelly', 'YUNGBLUD', 'Travis Barker']",Hotel Diablo,0.0257,0.628,0.744,0.0,7,0.0379,119.921,0.277,119.352,0.53,7,0.439,1,0.529,13.99423,9.11056
+0pThwJoRfvTcn8UMZeBOtg,This Mess,['Tyler Posey'],Scumbag,0.00218,0.433,0.923,0.0,1,0.124,89.968,0.586,90.217,0.456,1,0.471,0,0.528,35.14878,8.70364
+2R1wgrOA8ggP0tsAAkZcBF,Crémant auf Eis,"['Florida Juicy', 'kid kapri']",Crémant auf Eis,0.137,0.726,0.675,1.2e-06,2,0.184,131.95,0.381,131.98,0.541,7,0.725,1,0.742,29.54373,13.86349
+2Gj79aWO3E7vl1MWxwOJEB,1.000 EMOTIONEN,"['LUIS', 't-low']",INTERNETBABY,0.176,0.575,0.707,0.0,4,0.0347,157.939,0.511,158.13,0.441,4,0.489,0,0.609,25.81768,11.45778
+7xaqxUl08zOg0YNUHokQpq,Sehnsucht,"['Miksu / Macloud', 't-low']",Sehnsucht,0.642,0.804,0.645,0.0,6,0.0773,142.09,0.912,142.123,0.636,6,0.795,0,0.916,24.08084,7.9519
+2BAmov17OrsUMlfUgrWLR8,Hasst mich,"['YBRE', 'loufre', 'Dasco']",Hasst mich,0.0494,0.581,0.897,0.0,0,0.0639,90.006,0.509,89.947,0.58,5,0.643,0,0.458,20.59216,8.53717
+3mdilGAt9TU6Ymo6WVnvMl,Abstand,['Xam651'],Abstand,0.345,0.822,0.52,0.0,1,0.0663,78.998,0.755,79.071,0.758,1,0.626,1,0.497,28.10854,8.14605
+33NRFo8Gi7atry5K38He46,fucked up love,['lityway'],fucked up love,0.301,0.511,0.697,3.16e-05,1,0.0463,176.037,0.552,176.15,0.388,4,0.223,1,0.42,21.04897,11.28584
+6KvkoXlaQSMIO9AgusoHUp,Crashen,['t-low'],Benzo Diaries,0.0679,0.649,0.733,0.0,11,0.3,150.874,0.498,151.455,0.68,7,0.063,1,0.558,11.52943,12.7436
+6q11kvJWt4SYHiNembjnaU,Nur ein Wort,"['Rowli', 'Hank', 'Sick & Tired', 'Asterio']",Nur ein Wort,0.0828,0.579,0.886,0.145,4,0.0406,91.992,0.525,94.319,0.38,4,0.0,1,0.0,8.97403,10.9229
+67RNYP9nm5mK86Tojbf686,Bisschen High,"['LUIS', 'TYM', 't-low']",Bisschen High,0.139,0.514,0.751,0.0,6,0.0577,160.0,0.462,160.111,0.4,6,0.669,1,0.693,24.74755,12.22818
+1OqbX2MZ6ZzWP7HjMHbdkp,Pink Lemonade,['The Wombats'],Glitterbug,0.00406,0.56,0.956,1.55e-06,0,0.0776,143.993,0.821,143.872,0.478,9,0.665,0,0.652,22.49193,19.64137
+6cuSWDG6TiB7a5l708ulz5,Everything Is Alright,['The Glorious Sons'],Young Beauties and Fools,0.00459,0.564,0.725,0.0,9,0.0332,128.88,0.242,129.237,0.509,5,0.384,1,0.514,33.01073,8.26956
+75D3n6wnFQmu1HVmLAlWM4,I Predict A Riot,['Kaiser Chiefs'],Employment,0.0243,0.395,0.979,0.0,8,0.0766,158.842,0.41,158.838,0.342,5,0.407,0,0.51,24.93701,27.72206
+2ZYBwkmtYhgUj1A7teYAZ7,Suit And Jacket,['Judah & the Lion'],Folk Hop N' Roll (Deluxe),0.222,0.452,0.58,3.23e-05,10,0.0462,164.162,0.111,163.983,0.309,10,0.501,1,0.419,70.79361,9.31623
+17weS3aO2oaGYJ9Q9yM56X,I'm Not Ok,['Weathers'],Kids In The Night,0.00628,0.397,0.962,0.0,9,0.0639,177.927,0.542,178.11,0.211,9,0.528,1,0.514,24.61082,43.78678
+7jHJ2MzIKO1kIMxGamKRKn,16,['Highly Suspect'],MCID,0.00124,0.534,0.621,1.39e-05,2,0.0449,91.845,0.186,91.907,0.515,2,0.232,1,0.496,32.12367,22.43043
+5jJ69cMDMC0aeWPjZo6VP2,Lampshades on Fire,['Modest Mouse'],Strangers to Ourselves,0.156,0.659,0.906,3.27e-06,7,0.0428,94.997,0.792,95.194,0.65,0,0.023,0,0.0,18.95643,102.36346
+4q604hQba5940BbOoaenmz,Blood In The Cut,['K.Flay'],Every Where Is Some Where,0.118,0.77,0.655,0.0234,2,0.0316,129.964,0.639,129.703,0.558,2,0.17,1,0.432,10.16464,7.9951
+4Xx0J00u90QvnG3rwz4Itp,Adderall,['Max Frost'],Adderall,0.000672,0.681,0.891,1.07e-06,6,0.0408,100.008,0.556,99.988,0.712,10,0.137,0,0.323,40.79286,8.5687
+3QRqzF6rX9nZbTGQvBU5bN,Lemon to a Knife Fight,['The Wombats'],Beautiful People Will Ruin Your Life,0.000889,0.557,0.849,0.0,9,0.0444,149.994,0.71,150.054,0.413,0,0.601,1,0.245,12.79674,4.0765
