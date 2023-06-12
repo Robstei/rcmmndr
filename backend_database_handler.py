@@ -99,6 +99,32 @@ def get_liked_songs():
         results = sp.next(results)  # Nächste Seite abrufen -> wieder 50 neue IDs laden und abspeichern bis ende
 
     return track_ids
+
+def get_playlist_track_ids(playlist_url):
+    # Extrahiere die Playlist-ID aus der Playlist-URL
+    playlist_id = playlist_url.split('/')[-1]
+    playlist_id = playlist_url.split('?si')[0]
+
+    # Initialisiere eine leere Liste für die Track-IDs
+    track_ids = []
+
+    # Rufe die Playlist-Details über die API ab
+    playlist = sp.playlist(playlist_id)
+
+    # Extrahiere die Track-IDs aus der aktuellen Seite der Playlist
+    tracks = playlist['tracks']
+    for item in tracks['items']:
+        track_ids.append(item['track']['id'])
+
+    # Überprüfe, ob weitere Seiten vorhanden sind, und iteriere über diese
+    while tracks['next']:
+        tracks = sp.next(tracks)  # Nächste Seite der Playlist abrufen
+
+        # Extrahiere die Track-IDs aus der aktuellen Seite und füge sie zur Liste hinzu
+        for item in tracks['items']:
+            track_ids.append(item['track']['id'])
+
+    return track_ids
     
 
 def write_multiple_songs(song_array):
@@ -106,7 +132,8 @@ def write_multiple_songs(song_array):
 
     for track_id in song_array:        
         if track_id in database['track_id'].values:          
-            print("\nDer Track ist bereits in der Datenbank\n")
+            #print("\nDer Track ist bereits in der Datenbank\n")                        #hat sich bewiesen, dass das klappt bleibt für debug drin
+            print(" ")
         else:
             database.dropna()
             track_info = sp.track(track_id)
@@ -115,7 +142,6 @@ def write_multiple_songs(song_array):
             sections = audio_analysis['sections']
             sig_sec = sections[1]
             genres = sp.recommendation_genre_seeds()
-            print(track_info, "\n")
 
             data_current = pd.DataFrame({
                 'track_id': [track_id],
@@ -144,13 +170,17 @@ def write_multiple_songs(song_array):
 
             database = pd.concat([database, data_current], ignore_index=True)
             database.to_csv('database_songs.csv', index=False)
+        
+    print("Songs erfolgreich hinzugefügt!")
+
 
 
 while True:         # Für mich zum handlen, Aufruf der Funktion muss über Frontend erfolgen 
     write_database()
-    like = get_liked_songs()
-    write_multiple_songs(like)
-    time.sleep(20)
+    url_playlist = "https://open.spotify.com/playlist/1wZRjyR5YdqNKAUlZlgvCG?si=0a0cafb1e984443e"
+    songs = get_playlist_track_ids(url_playlist)
+    write_multiple_songs(songs)
+    time.sleep(300)
     """
     liked_songs = get_liked_songs()
     #write_multiple_songs(liked_songs)
