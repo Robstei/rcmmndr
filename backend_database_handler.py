@@ -177,7 +177,7 @@ def write_multiple_songs(song_array):
 
 while True:         # Für mich zum handlen, Aufruf der Funktion muss über Frontend erfolgen 
     write_database()
-    url_playlist = "https://open.spotify.com/playlist/1wZRjyR5YdqNKAUlZlgvCG?si=0a0cafb1e984443e"
+    url_playlist = "https://open.spotify.com/playlist/2RdtlDWrWkT7F32S1u35rX?si=5b58c1dde6af40ad"
     songs = get_playlist_track_ids(url_playlist)
     write_multiple_songs(songs)
     time.sleep(300)
