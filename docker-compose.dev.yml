@@ -1,0 +1,26 @@
+services:
+  next:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - 3000:3000
+    volumes:
+      - ./:/app
+      - ignore:/app/node_modules/
+  database:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: example
+    volumes:
+      - mi_tinder_db:/var/lib/postgresql/data
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+volumes:
+  mi_tinder_db:
+  ignore:

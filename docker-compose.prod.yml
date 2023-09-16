@@ -1,0 +1,23 @@
+services:
+  next:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    ports:
+      - 3000:3000
+  database:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: example
+    volumes:
+      - mi_tinder_db_production:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+volumes:
+  mi_tinder_db_production:

@@ -1,0 +1,195 @@
+datasource db {
+    provider          = "postgresql"
+    url               = env("DATABASE_URL")
+    shadowDatabaseUrl = env("SHADOW_DATABASE_URL") // Only needed when using a cloud provider that doesn't support the creation of new databases, like Heroku. Learn more: https://pris.ly/d/migrate-shadow
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+model Account {
+    id                String  @id @default(cuid())
+    userId            String
+    type              String
+    provider          String
+    providerAccountId String
+    refresh_token     String? @db.Text
+    access_token      String? @db.Text
+    expires_at        Int?
+    token_type        String?
+    scope             String?
+    id_token          String? @db.Text
+    session_state     String?
+
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@unique([provider, providerAccountId])
+}
+
+model Session {
+    id           String   @id @default(cuid())
+    sessionToken String   @unique
+    userId       String
+    expires      DateTime
+    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+    id            String    @id @default(cuid())
+    name          String?
+    email         String?   @unique
+    emailVerified DateTime?
+    image         String?
+    accounts      Account[]
+    sessions      Session[]
+    likes         Likes[]
+    Track         Track[]
+}
+
+model VerificationToken {
+    identifier String
+    token      String   @unique
+    expires    DateTime
+
+    @@unique([identifier, token])
+}
+
+model Track {
+    id            String         @id
+    trackFeatures TrackFeatures?
+    trackAnalysis TrackAnalysis?
+    artists       Artist[]
+    users         User[]
+}
+
+model Artist {
+    id     String   @id
+    genres String[]
+    Track  Track[]
+}
+
+model TrackFeatures {
+    id               String @id @default(cuid())
+    track            Track  @relation(fields: [trackId], references: [id], onDelete: Cascade)
+    trackId          String @unique
+    acousticness     Float
+    danceability     Float
+    duration_ms      Int
+    energy           Float
+    instrumentalness Float
+    key              Int
+    liveness         Float
+    loudness         Float
+    mode             Int
+    speechiness      Float
+    tempo            Float
+    time_signature   Int
+    valence          Float
+}
+
+model TrackAnalysis {
+    id                        String     @id @default(cuid())
+    Track                     Track      @relation(fields: [trackId], references: [id], onDelete: Cascade)
+    trackId                   String     @unique
+    num_samples               Int
+    duration                  Float
+    sample_md5                String
+    offset_seconds            Int
+    window_seconds            Int
+    analysis_sample_rate      Int
+    analysis_channels         Int
+    end_of_fade_in            Float
+    start_of_fade_out         Float
+    loudness                  Float
+    tempo                     Float
+    tempo_confidence          Float
+    time_signature            Int
+    time_signature_confidence Float
+    key                       Int
+    key_confidence            Float
+    mode                      Int
+    mode_confidence           Float
+    codestring                String
+    code_version              Float
+    echoprintstring           String
+    echoprint_version         Float
+    synchstring               String
+    synch_version             Float
+    rhythmstring              String
+    rhythm_version            Float
+    bars                      Bars[]
+    beats                     Beats[]
+    sections                  Sections[]
+    segments                  Segments[]
+    tatums                    Tatums[]
+}
+
+model Bars {
+    id         String        @id @default(cuid())
+    start      Float
+    duration   Float
+    confidence Float
+    track      TrackAnalysis @relation(fields: [trackId], references: [id], onDelete: Cascade)
+    trackId    String
+}
+
+model Beats {
+    id         String        @id @default(cuid())
+    start      Float
+    duration   Float
+    confidence Float
+    track      TrackAnalysis @relation(fields: [trackId], references: [id], onDelete: Cascade)
+    trackId    String
+}
+
+model Sections {
+    id                        String        @id @default(cuid())
+    start                     Float
+    duration                  Float
+    confidence                Float
+    loudness                  Float
+    tempo                     Float
+    tempo_confidence          Float
+    key                       Int
+    key_confidence            Float
+    mode                      Float
+    mode_confidence           Float
+    time_signature            Int
+    time_signature_confidence Float
+    track                     TrackAnalysis @relation(fields: [trackId], references: [id], onDelete: Cascade)
+    trackId                   String
+}
+
+model Segments {
+    id                String        @id @default(cuid())
+    start             Float
+    duration          Float
+    confidence        Float
+    loudness_start    Float
+    loudness_max      Float
+    loudness_max_time Float
+    loudness_end      Int
+    pitches           Float[]
+    timbre            Float[]
+    track             TrackAnalysis @relation(fields: [trackId], references: [id], onDelete: Cascade)
+    trackId           String
+}
+
+model Tatums {
+    id         String        @id @default(cuid())
+    start      Float
+    duration   Float
+    confidence Float
+    track      TrackAnalysis @relation(fields: [trackId], references: [id], onDelete: Cascade)
+    trackId    String
+}
+
+model Likes {
+    id        String   @id @default(cuid())
+    trackId   String
+    liked     Boolean
+    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId    String
+    timeStamp DateTime
+}

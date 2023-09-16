@@ -1,7 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  let scope = "streaming user-read-email user-read-private user-read-currently-playing";
+  let scope =
+    "streaming user-read-email user-read-private user-read-currently-playing";
 
   let state = generateRandomString(16);
 
@@ -17,7 +18,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
   res.redirect(
     "https://accounts.spotify.com/authorize/?" +
-      auth_query_parameters.toString()
+      auth_query_parameters.toString(),
   );
 }
 
