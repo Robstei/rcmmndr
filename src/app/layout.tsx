@@ -1,6 +1,7 @@
 import SessionProviderWraper from "@/components/SessionProvider";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]/route";
+import "./globals.css";
 
 export const metadata = {
   title: "Next.js",

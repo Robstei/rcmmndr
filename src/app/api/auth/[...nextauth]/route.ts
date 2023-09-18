@@ -71,7 +71,6 @@ export const authOptions: NextAuthOptions = {
       });
 
       session.user.spotifyAccessToken = response.access_token;
-      session.user.spotifyAccessToken = result?.access_token || "";
       return session;
     },
   },

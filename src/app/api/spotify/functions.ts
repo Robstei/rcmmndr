@@ -8,12 +8,13 @@ export async function createLike(
   liked: boolean,
   session: Session
 ) {
-  await prismaClient.likes.create({
+  await prismaClient.like.create({
     data: {
       trackId,
       liked,
       timeStamp: new Date(),
-      user: { connect: { id: session.user.id } },
+      userId: session.user.id,
+      recomendationId: "",
     },
   });
 }
@@ -22,13 +23,4 @@ export async function addRecomendation(
   trackId: string,
   liked: boolean,
   session: Session
-) {
-  await prismaClient.likes.create({
-    data: {
-      trackId,
-      liked,
-      timeStamp: new Date(),
-      user: { connect: { id: session.user.id } },
-    },
-  });
-}
+) {}
