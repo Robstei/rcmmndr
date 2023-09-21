@@ -1,10 +1,8 @@
 "use client";
 
 import { getCookie, setCookie } from "cookies-next";
-import { get, request } from "http";
-import { cookies } from "next/dist/client/components/headers";
 import Link from "next/link";
-import { redirect, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Callback() {

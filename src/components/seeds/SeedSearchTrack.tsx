@@ -1,15 +1,15 @@
 import { SeedSearch } from "./SeedSearch";
-import { Artist, TrackSearch } from "../schemas/search";
-import { useRecommendationStore } from "@/stores/RecommendationStore";
+import { Track, TrackSearch } from "@/schemas/schemas";
+import { useRecommendationParameterStore } from "@/stores/RecommendationParamterStore";
 import { useSession } from "next-auth/react";
 
 export function SeedSearchTrack() {
   const { trackSeeds, addTrackSeed, removeTrackSeed } =
-    useRecommendationStore();
+    useRecommendationParameterStore();
   const session = useSession();
 
   return (
-    <SeedSearch<Artist>
+    <SeedSearch<Track>
       currentSeeds={trackSeeds}
       addSeed={(newSeed) => {
         addTrackSeed(newSeed);

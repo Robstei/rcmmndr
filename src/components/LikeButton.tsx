@@ -1,17 +1,20 @@
-import { RecommendationBody } from "@/app/api/spotify/recommendation/route";
-import { useRecommendationStore } from "@/stores/RecommendationStore";
+import { useRecommendationParameterStore } from "@/stores/RecommendationParamterStore";
 
 export function LikeButton({
   like,
-  trackId,
   className,
 }: {
   like: boolean;
-  trackId: string;
-  className: string;
+  className?: string;
 }) {
-  const recommendationBody = useRecommendationStore().getRecommendationBody();
+  const getRecommendationBody = useRecommendationParameterStore(
+    (state) => state.getRecommendationBody
+  );
   async function handleClick(like: boolean) {
+    // send audioanalysis + recommendation settings + like to  /api/like
+    // get analysis for next song
+    // start next song
+
     await fetch("api/spotify/recommendation", {
       method: "post",
       body: JSON.stringify(recommendationBody),

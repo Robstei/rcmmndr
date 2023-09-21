@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
-  let code = req.nextUrl.searchParams.get("code");
+  const code = req.nextUrl.searchParams.get("code");
   if (typeof code !== "string") {
     return;
   }
@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
     Buffer.from(
       process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID +
         ":" +
-        process.env.SPOTIFY_CLIENT_SECRET,
+        process.env.SPOTIFY_CLIENT_SECRET
     ).toString("base64");
 
   console.log(test);

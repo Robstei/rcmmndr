@@ -1,5 +1,4 @@
-import Login from "@/components/Login";
-import WebPlayback from "@/components/WebPlayback";
+import Player from "@/components/Player";
 import Header from "@/components/Header";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "./api/auth/[...nextauth]/route";
@@ -7,7 +6,6 @@ import { SignInButton } from "@/components/SignInButton";
 
 export default async function HomePage() {
   const session = await getServerSession(authOptions);
-
   if (!session) {
     return (
       <div className="flex h-screen	justify-center items-center">
@@ -22,7 +20,7 @@ export default async function HomePage() {
   return (
     <div>
       <Header />
-      <WebPlayback session={session} />
+      <Player session={session} />
     </div>
   );
 }

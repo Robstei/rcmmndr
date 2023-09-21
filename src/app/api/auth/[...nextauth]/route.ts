@@ -27,7 +27,7 @@ export const authOptions: NextAuthOptions = {
   ],
   pages: { newUser: "/generateProfile" },
   callbacks: {
-    async session({ session, user, token }) {
+    async session({ session, user }) {
       const result = await prismaClient.account.findFirst({
         select: { access_token: true, expires_at: true, refresh_token: true },
         where: { userId: user.id },

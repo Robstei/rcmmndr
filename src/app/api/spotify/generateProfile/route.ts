@@ -1,12 +1,17 @@
 import { getServerSession } from "next-auth";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { authOptions } from "../../auth/[...nextauth]/route";
-import { Artists, SavedTracks, TrackAnalysis, TrackFeatures } from "./schemas";
+import {
+  Artists,
+  SavedTracks,
+  TrackAnalysis,
+  TrackFeatures,
+  Track,
+} from "@/schemas/schemas";
 import { prismaClient } from "@/prisma/prismaClient";
 import { Prisma } from "@prisma/client";
-import { Track } from "./schemas";
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     console.time(`generateProfile`);
     const session = await getServerSession(authOptions);
@@ -60,7 +65,7 @@ async function addArtistGenres(tracks: Track[], accessToken: string) {
     });
   });
   const artistIdsWithoutGenre = Array.from(artistIdsWithoutGenreSet);
-  const requests: Promise<any>[] = [];
+  const requests: Promise<unknown>[] = [];
   for (let i = 0; i < artistIdsWithoutGenre.length; i += 50) {
     const ids = artistIdsWithoutGenre.slice(i, i + 50);
     const request = fetch(
@@ -139,7 +144,7 @@ async function getAllLikedTracks(accessToken: string) {
 
   let trackData = dataFirstFetch.items;
 
-  const promises: Promise<any>[] = [];
+  const promises: Promise<unknown>[] = [];
   for (let i = 50; i < dataFirstFetch.total; i += 50) {
     const promise = fetch(
       `https://api.spotify.com/v1/me/tracks?limit=50&offset=${i}`,
@@ -172,7 +177,7 @@ async function getAllLikedTracks(accessToken: string) {
   return trackData;
 }
 
-async function addFeaturesToTracks(tracks: Track[], accessToken: String) {
+async function addFeaturesToTracks(tracks: Track[], accessToken: string) {
   const requests = [];
   const tracksCopy = tracks.slice();
   while (tracksCopy.length > 0) {
@@ -225,7 +230,7 @@ function combineTracksWithFeautures(
   });
 }
 
-async function getTrackAnalysis(trackId: String, accessToken: String) {
+async function getTrackAnalysis(trackId: string, accessToken: string) {
   const analysisDataRaw = await fetch(
     `https://api.spotify.com/v1/audio-analysis/${trackId}`,
     {
@@ -252,7 +257,7 @@ async function saveTrackWithFeatures(
   for (const track of trackWithFeauture) {
     const { trackId, ...featuresWithoutTrackId } = track.trackFeatureData;
     const trackCreateInput: Prisma.TrackCreateInput = {
-      id: track.id,
+      id: trackId,
       artists: {
         connect: track.artists.map((artist) => {
           return {

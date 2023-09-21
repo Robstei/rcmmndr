@@ -1,12 +1,11 @@
 import { SeedSearch } from "./SeedSearch";
-import { Artist } from "../schemas/search";
-import { useRecommendationStore } from "@/stores/RecommendationStore";
-import { ArtistSearch } from "../schemas/search";
+import { useRecommendationParameterStore } from "@/stores/RecommendationParamterStore";
 import { useSession } from "next-auth/react";
+import { Artist, ArtistSearch } from "@/schemas/schemas";
 
 export function SeedSearchArtist() {
   const { artistSeeds, addArtistSeed, removeArtistSeed } =
-    useRecommendationStore();
+    useRecommendationParameterStore();
   const session = useSession();
 
   return (

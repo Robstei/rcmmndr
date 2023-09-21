@@ -19,7 +19,7 @@ export function VariableSlider({
     <div className="flex flex-col">
       <label htmlFor={name}>{name}</label>
       <input
-        className="bg-slate-700 h-12 p-4 mr-5 grow w-20"
+        className="bg-slate-700 h-12 p-4 mr-5 grow w-40"
         type="number"
         min={min}
         max={max}

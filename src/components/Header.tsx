@@ -1,9 +1,7 @@
 "use client";
 
-import { signIn, signOut } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import { PrimaryButton } from "./PrimaryButton";
-import Image from "next/image";
-import MenuIcon from "./menu.svg";
 
 export default function Header() {
   return (

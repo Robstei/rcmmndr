@@ -46,7 +46,6 @@ export function SeedSearch<T>({
             onClick={async () => {
               if (!search) return;
               const results = await searchSeeds(search);
-              console.log(results);
               setSearchResults(results);
             }}
           >

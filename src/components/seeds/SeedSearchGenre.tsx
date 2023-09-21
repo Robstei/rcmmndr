@@ -1,14 +1,13 @@
 import { SeedSearch } from "./SeedSearch";
-import { AvailableGenres } from "../schemas/search";
-import { useRecommendationStore } from "@/stores/RecommendationStore";
-import { ArtistSearch } from "../schemas/search";
+import { AvailableGenres } from "@/schemas/schemas";
+import { useRecommendationParameterStore } from "@/stores/RecommendationParamterStore";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-import { Genre } from "../schemas/search";
+import { Genre } from "@/schemas/schemas";
 
 export function SeedGenre() {
   const { genreSeeds, addGenreSeed, removeGenreSeed } =
-    useRecommendationStore();
+    useRecommendationParameterStore();
   const session = useSession();
   const [allGenres, setAllGenres] = useState<string[]>([]);
 
