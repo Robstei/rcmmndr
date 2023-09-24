@@ -1,30 +1,13 @@
 import { SeedSearch } from "./SeedSearch";
-import { AvailableGenres } from "@/schemas/schemas";
 import { useRecommendationParameterStore } from "@/stores/RecommendationParamterStore";
-import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
 import { Genre } from "@/schemas/schemas";
+import { genres } from "@/lib/spotifyGenreSeedsBackup";
 
 export function SeedGenre() {
   const { genreSeeds, addGenreSeed, removeGenreSeed } =
     useRecommendationParameterStore();
-  const session = useSession();
-  const [allGenres, setAllGenres] = useState<string[]>([]);
+  const allGenres = genres;
 
-  useEffect(() => {
-    async function fetchAllGenres() {
-      const results = await fetch(
-        "https://api.spotify.com/v1/recommendations/available-genre-seeds",
-        {
-          headers: {
-            Authorization: `Bearer ${session.data?.user.spotifyAccessToken}`,
-          },
-        }
-      );
-      setAllGenres(AvailableGenres.parse(await results.json()).genres);
-    }
-    fetchAllGenres();
-  }, [session.data?.user.spotifyAccessToken]);
   return (
     <SeedSearch<Genre>
       currentSeeds={genreSeeds}

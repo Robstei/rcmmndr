@@ -1,6 +1,7 @@
 import { WebPlaybackTrack } from "@/schemas/schemas";
 import { RecommendationBody } from "@/schemas/schemas";
 import { useRecommendationParameterStore } from "@/stores/RecommendationParamterStore";
+import { useRecommendationStore } from "@/stores/RecommendationStore";
 import { Dispatch, SetStateAction } from "react";
 
 WebPlaybackTrack;
@@ -49,7 +50,6 @@ export function setupSpotifyPlayer(
     });
 
     player.addListener("player_state_changed", (state) => {
-      console.log("hier", state);
       if (!state) {
         return;
       }
@@ -77,10 +77,11 @@ async function takeControl(spotifyAccessToken: string, device_id: string) {
 }
 
 async function setInitialConfig() {
-  const result = await fetch("/api/user/initialconfig");
+  const result = await fetch("/api/user/defaultParameter");
   const initialConfig = RecommendationBody.parse(await result.json());
   useRecommendationParameterStore.setState({
     ...initialConfig.seeds,
     ...initialConfig.values,
   });
+  useRecommendationStore.setState({ basedOnDefaultParameter: true });
 }

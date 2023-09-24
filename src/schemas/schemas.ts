@@ -1,30 +1,49 @@
 import { z } from "zod";
 
+export type TrackFeaturesAfter = z.infer<typeof TrackFeaturesAfter>;
+export const TrackFeaturesAfter = z.object({
+  acousticness: z.number(),
+  danceability: z.number(),
+  duration_ms: z.number(),
+  energy: z.number(),
+  trackId: z.string(),
+  instrumentalness: z.number(),
+  key: z.number(),
+  liveness: z.number(),
+  loudness: z.number(),
+  mode: z.number(),
+  speechiness: z.number(),
+  tempo: z.number(),
+  time_signature: z.number(),
+  valence: z.number(),
+});
+
 export type TrackFeatures = z.infer<typeof TrackFeatures>;
 export const TrackFeatures = z
   .object({
-    audio_features: z.array(
-      z
-        .object({
-          acousticness: z.number(),
-          danceability: z.number(),
-          duration_ms: z.number(),
-          energy: z.number(),
-          id: z.string(),
-          instrumentalness: z.number(),
-          key: z.number(),
-          liveness: z.number(),
-          loudness: z.number(),
-          mode: z.number(),
-          speechiness: z.number(),
-          tempo: z.number(),
-          time_signature: z.number(),
-          valence: z.number(),
-        })
-        .transform(({ id, ...rest }) => {
-          return { trackId: id, ...rest };
-        })
-    ),
+    acousticness: z.number(),
+    danceability: z.number(),
+    duration_ms: z.number(),
+    energy: z.number(),
+    id: z.string(),
+    instrumentalness: z.number(),
+    key: z.number(),
+    liveness: z.number(),
+    loudness: z.number(),
+    mode: z.number(),
+    speechiness: z.number(),
+    tempo: z.number(),
+    time_signature: z.number(),
+    valence: z.number(),
+  })
+  .transform(({ id, ...rest }) => {
+    return { trackId: id, ...rest };
+  });
+
+export type MultipleTrackFeatures = z.infer<typeof MultipleTrackFeatures>;
+export const MultipleTrackFeatures = z
+  .object({
+    audio_features: z.array(TrackFeatures),
   })
   .transform((value) => value.audio_features);
 
@@ -164,6 +183,24 @@ export const SavedTracks = z.object({
   total: z.number(),
 });
 
+export type RecommendationParameter = z.infer<typeof RecommendationParameter>;
+export const RecommendationParameter = z.object({
+  acousticness: z.string(),
+  danceability: z.string(),
+  duration: z.string(),
+  energy: z.string(),
+  key: z.string(),
+  liveness: z.string(),
+  loudness: z.string(),
+  mode: z.string(),
+  popularity: z.string().optional(),
+  speechiness: z.string(),
+  tempo: z.string(),
+  timeSignature: z.string(),
+  valence: z.string(),
+  instrumentalness: z.string(),
+});
+
 export type RecommendationBody = z.infer<typeof RecommendationBody>;
 
 export const RecommendationBody = z.object({
@@ -172,22 +209,20 @@ export const RecommendationBody = z.object({
     trackSeeds: z.array(Track),
     genreSeeds: z.array(Genre),
   }),
-  values: z.object({
-    acousticness: z.string(),
-    danceability: z.string(),
-    duration: z.string(),
-    energy: z.string(),
-    key: z.string(),
-    liveness: z.string(),
-    loudness: z.string(),
-    mode: z.string(),
-    popularity: z.string().optional(),
-    speechiness: z.string(),
-    tempo: z.string(),
-    timeSignature: z.string(),
-    valence: z.string(),
-    instrumentalness: z.string(),
+  values: RecommendationParameter,
+});
+
+export type RecommendationBodyPartial = z.infer<
+  typeof RecommendationBodyPartial
+>;
+
+export const RecommendationBodyPartial = z.object({
+  seeds: z.object({
+    artistSeeds: z.array(Artist),
+    trackSeeds: z.array(Track),
+    genreSeeds: z.array(Genre),
   }),
+  values: RecommendationParameter.partial(),
 });
 
 export type WebPlaybackTrack = z.infer<typeof WebPlaybackTrack>;
@@ -204,4 +239,15 @@ export const WebPlaybackTrack = z.object({
     images: z.array(z.object({ url: z.string() })),
   }),
   artists: z.array(z.object({ uri: z.string(), name: z.string() })),
+});
+export type LikeBody = z.infer<typeof LikeBody>;
+
+export const LikeBody = z.object({
+  parameter: RecommendationBodyPartial,
+  analysisData: TrackAnalysis,
+  trackFeatures: TrackFeatures.or(TrackFeaturesAfter),
+  basedOnDefaultVaues: z.boolean(),
+  like: z.boolean(),
+  timeStamp: z.string().pipe(z.coerce.date()),
+  track: Track,
 });

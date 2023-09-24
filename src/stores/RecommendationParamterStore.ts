@@ -2,56 +2,17 @@ import { RecommendationBody } from "@/schemas/schemas";
 import { create } from "zustand";
 import { subscribeWithSelector } from "zustand/middleware";
 import { getSession } from "next-auth/react";
-import { useRecommendationStore } from "./RecommendationStore";
 import { z } from "zod";
-import { Genre, Track, Artist, Recommendations } from "@/schemas/schemas";
-
-/* interface RecommendationParameterState {
-  getRecommendationBody: () => RecommendationBody;
-  artistSeeds: Artist[];
-  addArtistSeed: (newSeed: Artist) => void;
-  removeArtistSeed: (removedSeed: Artist) => void;
-  trackSeeds: Artist[];
-  addTrackSeed: (newSeed: Artist) => void;
-  removeTrackSeed: (removedSeed: Artist) => void;
-  genreSeeds: Genre[];
-  addGenreSeed: (newSeed: Genre) => void;
-  removeGenreSeed: (removedSeed: Genre) => void;
-  acousticness: string;
-  setAcousticness: (newValue: string) => void;
-  danceability: string;
-  setDanceability: (newValue: string) => void;
-  duration: string;
-  setDuration: (newValue: string) => void;
-  energy: string;
-  setEnergy: (newValue: string) => void;
-  instrumentalness: string;
-  setInstrumentalness: (newValue: string) => void;
-  key: string;
-  setKey: (newValue: string) => void;
-  liveness: string;
-  setliveness: (newValue: string) => void;
-  loudness: string;
-  setLoudness: (newValue: string) => void;
-  mode: string;
-  setMode: (newValue: string) => void;
-  popularity: string;
-  setPopularity: (newValue: string) => void;
-  speechiness: string;
-  setSpeechiness: (newValue: string) => void;
-  tempo: string;
-  setTempo: (newValue: string) => void;
-  timeSignature: string;
-  setTimeSignature: (newValue: string) => void;
-  valence: string;
-  setValence: (newValue: string) => void;
-} */
+import { Genre, Track, Artist } from "@/schemas/schemas";
+import { analyseAndPlayNextRecommendation } from "@/lib/spotify";
+import { useRecommendationStore } from "./RecommendationStore";
 
 type RecommendationParameterState = z.infer<
   typeof RecommendationParameterState
 >;
 export const RecommendationParameterState = z.object({
   getRecommendationBody: z.function().returns(RecommendationBody),
+  basedOnDefaultParameter: z.boolean(),
   artistSeeds: z.array(Artist),
   addArtistSeed: z.function().args(Artist),
   removeArtistSeed: z.function().args(Artist),
@@ -116,6 +77,7 @@ export const useRecommendationParameterStore = create(
         instrumentalness: get().instrumentalness,
       },
     }),
+    basedOnDefaultParameter: false,
     artistSeeds: [],
     addArtistSeed: (newSeed) =>
       set((state) => ({
@@ -230,6 +192,7 @@ let timeOfLastChange = Date.now();
 let currentTimeoutId: number;
 
 useRecommendationParameterStore.subscribe(async () => {
+  useRecommendationStore.setState({ basedOnDefaultParameter: false });
   timeOfLastChange = Date.now();
   const difference = timeOfLastChange - timeOfLastRequest;
 
@@ -240,75 +203,12 @@ useRecommendationParameterStore.subscribe(async () => {
     const session = await getSession();
     if (!session) throw new Error("no session");
 
+    analyseAndPlayNextRecommendation(session.user.spotifyAccessToken, true);
+
     currentTimeoutId = window.setTimeout(async () => {
       if (timeOfLastChange > timeOfLastRequest) {
-        await updateRecommendations(session.user.spotifyAccessToken);
-        await playNextRecommendation(session.user.spotifyAccessToken);
+        analyseAndPlayNextRecommendation(session.user.spotifyAccessToken, true);
       }
     }, 1000);
-    await updateRecommendations(session.user.spotifyAccessToken);
-    await playNextRecommendation(session.user.spotifyAccessToken);
   }
 });
-
-async function updateRecommendations(spotifyAccessToken: string) {
-  const body = useRecommendationParameterStore
-    .getState()
-    .getRecommendationBody();
-
-  const searchParams = new URLSearchParams();
-  type key = keyof typeof body.values;
-  let key: key;
-  for (key in body.values) {
-    if (body.values[key] !== "") {
-      const value = body.values[key];
-      searchParams.set(key, value || "");
-    }
-  }
-
-  let url =
-    "https://api.spotify.com/v1/recommendations?" + searchParams.toString();
-
-  if (body.seeds.artistSeeds.length > 0) {
-    url += `&seed_artists=${body.seeds.artistSeeds
-      .map((seed) => seed.id)
-      .join(",")}`;
-  }
-
-  if (body.seeds.trackSeeds.length > 0) {
-    url += `&seed_tracks=${body.seeds.trackSeeds
-      .map((seed) => seed.id)
-      .join(",")}`;
-  }
-  if (body.seeds.genreSeeds.length > 0) {
-    url += `&seed_genres=${body.seeds.genreSeeds.join(",")}`;
-  }
-
-  const response = await fetch(url, {
-    headers: {
-      Authorization: `Bearer ${spotifyAccessToken}`,
-    },
-  });
-  const recommendations = Recommendations.parse(await response.json());
-
-  useRecommendationStore.setState(() => ({
-    currentIndex: 0,
-    recommendations: recommendations,
-  }));
-}
-
-async function playNextRecommendation(spotifyAccessToken: string) {
-  const { currentIndex, recommendations } = useRecommendationStore.getState();
-
-  if (recommendations.length === currentIndex) {
-    updateRecommendations(spotifyAccessToken);
-  }
-  const trackUri = recommendations[currentIndex + 1].uri;
-  await fetch("https://api.spotify.com/v1/me/player/play", {
-    method: "Put",
-    body: JSON.stringify({ uris: [trackUri] }),
-    headers: {
-      Authorization: `Bearer ${spotifyAccessToken}`,
-    },
-  });
-}

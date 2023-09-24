@@ -33,7 +33,7 @@ function Player({ session }: { session: Session }) {
     );
   }, [session.user.id, session.user.spotifyAccessToken]);
 
-  if (!player) {
+  if (!is_active) {
     return <Script src="https://sdk.scdn.co/spotify-player.js" />;
   }
 

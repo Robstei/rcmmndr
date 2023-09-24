@@ -10,7 +10,7 @@ export default async function HomePage() {
     return (
       <div className="flex h-screen	justify-center items-center">
         <div className="flex flex-col justify-center items-center h-[500px] bg-slate-700 w-[300px] p-5 rounded-md shadow-2xl">
-          <div className="mb-5">Mi_Tinder</div>
+          <div className="mb-5">Rcmmndr</div>
           <SignInButton />
         </div>
       </div>

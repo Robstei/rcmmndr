@@ -4,9 +4,8 @@ import { authOptions } from "../../auth/[...nextauth]/route";
 import {
   Artists,
   SavedTracks,
-  TrackAnalysis,
-  TrackFeatures,
   Track,
+  MultipleTrackFeatures,
 } from "@/schemas/schemas";
 import { prismaClient } from "@/prisma/prismaClient";
 import { Prisma } from "@prisma/client";
@@ -19,32 +18,20 @@ export async function GET() {
       return new NextResponse(null, { status: 401 });
     }
     const accessToken = session.user.spotifyAccessToken;
-
-    console.time("getAllLikedTracks");
     const tracks = await getAllLikedTracks(accessToken);
-    console.timeEnd("getAllLikedTracks");
-
-    console.time("addUserToExistingTracks");
     const newTracks = await addUserToExistingTracks(tracks, session.user.id);
-    console.timeEnd("addUserToExistingTracks");
 
-    console.time("addArtistGenres");
     const tracksWithArtistGenres = await addArtistGenres(
       newTracks,
       accessToken
     );
-    console.timeEnd("addArtistGenres");
 
-    console.time("addFeaturesToTracks");
     const tracksWithFeautures = await addFeaturesToTracks(
       tracksWithArtistGenres,
       accessToken
     );
-    console.timeEnd("addFeaturesToTracks");
 
-    console.time(`saveTrackWithFeatures`);
     await saveTrackWithFeatures(tracksWithFeautures, session.user.id);
-    console.timeEnd(`saveTrackWithFeatures`);
 
     console.timeEnd(`generateProfile`);
     return NextResponse.json({ success: true });
@@ -192,7 +179,7 @@ async function addFeaturesToTracks(tracks: Track[], accessToken: string) {
     ).then((response) => response.json());
     requests.push(request);
   }
-  let tracksFeatureData: TrackFeatures = [];
+  let tracksFeatureData: MultipleTrackFeatures = [];
   const resultsRaw = await Promise.allSettled(requests);
   resultsRaw
     .map((resultRaw) => {
@@ -200,7 +187,7 @@ async function addFeaturesToTracks(tracks: Track[], accessToken: string) {
         throw new Error("error passing track features");
       }
       try {
-        return TrackFeatures.parse(resultRaw.value);
+        return MultipleTrackFeatures.parse(resultRaw.value);
       } catch (e) {
         console.log("error parsing TrackFeatures in addFeaturesToTracks");
         throw e;
@@ -217,7 +204,7 @@ type TrackWithFeauture = ReturnType<typeof combineTracksWithFeautures>;
 
 function combineTracksWithFeautures(
   tracks: Track[],
-  tracksFeatureData: TrackFeatures
+  tracksFeatureData: MultipleTrackFeatures
 ) {
   return tracks.map((track) => {
     const trackFeatureData = tracksFeatureData.find(
@@ -229,19 +216,6 @@ function combineTracksWithFeautures(
     return { ...track, trackFeatureData };
   });
 }
-
-async function getTrackAnalysis(trackId: string, accessToken: string) {
-  const analysisDataRaw = await fetch(
-    `https://api.spotify.com/v1/audio-analysis/${trackId}`,
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    }
-  );
-  return TrackAnalysis.parse(await analysisDataRaw.json());
-}
-
 async function saveTrackWithFeatures(
   trackWithFeauture: TrackWithFeauture,
   userId: string
@@ -257,7 +231,8 @@ async function saveTrackWithFeatures(
   for (const track of trackWithFeauture) {
     const { trackId, ...featuresWithoutTrackId } = track.trackFeatureData;
     const trackCreateInput: Prisma.TrackCreateInput = {
-      id: trackId,
+      id: track.id,
+      name: track.name,
       artists: {
         connect: track.artists.map((artist) => {
           return {

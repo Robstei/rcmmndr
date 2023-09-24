@@ -1,7 +1,7 @@
 import { TrackAnalysis } from "@/schemas/schemas";
 import { create } from "zustand";
 
-const useAnalysisStore = create<TrackAnalysis>(() => ({
+export const useAnalysisStore = create<TrackAnalysis>(() => ({
   bars: [],
   beats: [],
   sections: [],
@@ -36,7 +36,3 @@ const useAnalysisStore = create<TrackAnalysis>(() => ({
     window_seconds: -1,
   },
 }));
-
-export function setData(data: TrackAnalysis) {
-  useAnalysisStore.setState(data);
-}

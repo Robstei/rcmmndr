@@ -1,4 +1,10 @@
+import { analyseAndPlayNextRecommendation } from "@/lib/spotify";
+import { LikeBody } from "@/schemas/schemas";
+import { useAnalysisStore } from "@/stores/AnalysisStore";
+import { useFeatureStore } from "@/stores/FeatureStore";
 import { useRecommendationParameterStore } from "@/stores/RecommendationParamterStore";
+import { useRecommendationStore } from "@/stores/RecommendationStore";
+import { useSession } from "next-auth/react";
 
 export function LikeButton({
   like,
@@ -7,18 +13,39 @@ export function LikeButton({
   like: boolean;
   className?: string;
 }) {
-  const getRecommendationBody = useRecommendationParameterStore(
-    (state) => state.getRecommendationBody
-  );
-  async function handleClick(like: boolean) {
-    // send audioanalysis + recommendation settings + like to  /api/like
-    // get analysis for next song
-    // start next song
+  const { getRecommendationBody } = useRecommendationParameterStore();
+  const session = useSession();
 
-    await fetch("api/spotify/recommendation", {
+  async function handleClick(like: boolean) {
+    const { currentIndex, recommendations, basedOnDefaultParameter } =
+      useRecommendationStore.getState();
+
+    const likeBody: LikeBody = {
+      like: like,
+      timeStamp: new Date(),
+      track: recommendations[currentIndex],
+      parameter: getRecommendationBody(),
+      basedOnDefaultVaues: basedOnDefaultParameter,
+      analysisData: useAnalysisStore.getState(),
+      trackFeatures: {
+        ...useFeatureStore.getState(),
+      },
+    };
+
+    useRecommendationStore.setState({ currentIndex: currentIndex + 1 });
+
+    await fetch("api/spotify/like", {
       method: "post",
-      body: JSON.stringify(recommendationBody),
+      body: JSON.stringify(likeBody),
     });
+
+    if (!session.data?.user.spotifyAccessToken) {
+      throw new Error("no token available");
+    }
+
+    await analyseAndPlayNextRecommendation(
+      session.data?.user.spotifyAccessToken
+    );
   }
 
   return (

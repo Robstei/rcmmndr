@@ -1,34 +1,38 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Rcmmndr
 
-## Getting Started
+Ein Projekt von Alexander Bergmann (858200) & Robin Steil (899876) für das Modul Musikinformatik von Prof. Dr. Jochen Steffens an der Hochschule Düsselorf.
 
-First, run the development server:
+## Übersicht & Ziele
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+Diese Applikation schlägt den Nutzenden Lieder vor, auf der Basis der Lieblingssongs bei Spotify, welche diese "Liken" oder "Disliken" können.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Damit werden zwei Ziele verfolgt, welche in Zukunft weiter ausgebaut werden könnten.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Private Nutzung: Nutzende können neue Lieder entdecken und die Parameter, welche für die Generierung der Vorschläge genutzt werden, transparent beeinflussen.  
+2. Akademische Nutzung: Zu den Vorschlägen werden einige Daten gepeichert, welche es ermöglichen verschiende Forschungsthemen zu analysieren. Beispielsweise kann die Qualität der generierten Vorschläge beurteilt werden oder untersucht werden wie sich die bewerteten Songs zu den Favoriten der Person verhalten.
+     
+## Starten der Applikation
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Developement
+- "npm install" und "npm run generate" ausführen
+- docker installieren
+- unter https://developer.spotify.com/dashboard eine Spotify App erstellen.
+- Die Datei .env.example zu .env.local umbenennnen und dort die Werte für SPOTIFY_CLIENT_ID und SPOTIFY_CLIENT_SECRET einfügen
+- "npm run dev:docker:build" ausführen
+  Das frontend ist auf http://localhost:3000 verfügbar und die Datenbank kann über http://localhost:8080 mittels adminer erreicht werden
+### Production
+- "npm run prod:docker" ausführen
 
-## Learn More
+## Technische Details
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Die Applikation nutzt folgende Technoligien:
+-  [Next.js](https://nextjs.org/) für Front- und Backend
+-  [TypeScript](https://www.typescriptlang.org/)
+-  [Postgres](https://www.postgresql.org/) als Datenbank
+-  [Prisma](https://www.prisma.io/) als ORM
+-  [Docker](https://www.docker.com/)
+-  [Spotify Web API](https://developer.spotify.com/documentation/web-api) 
+-   [Spotify Web Playback SDK](https://developer.spotify.com/documentation/web-playback-sdk) für das Abspielen von Musik
+- [Auth.js](https://authjs.dev/) für die Authentifizierung
+- [zustand](https://github.com/pmndrs/zustand) für das Datenmanagement
+- [Zod](https://zod.dev/) für Schema Deklaration and Validierung 

@@ -14,7 +14,7 @@ services:
     environment:
       POSTGRES_PASSWORD: example
     volumes:
-      - mi_tinder_db:/var/lib/postgresql/data
+      - rcmmndr_developement_db:/var/lib/postgresql/data
   adminer:
     image: adminer
     restart: always
@@ -22,5 +22,5 @@ services:
       - 8080:8080
 
 volumes:
-  mi_tinder_db:
+  rcmmndr_developement_db:
   ignore:

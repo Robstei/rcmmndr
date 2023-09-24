@@ -6,6 +6,7 @@ type RecommendationState = {
   setCurrentIndex: (newValue: number) => void;
   recommendations: Track[];
   setRecommendations: (newValue: Track[]) => void;
+  basedOnDefaultParameter: boolean;
 };
 
 export const useRecommendationStore = create<RecommendationState>((set) => ({
@@ -13,4 +14,5 @@ export const useRecommendationStore = create<RecommendationState>((set) => ({
   setCurrentIndex: (newValue) => set(() => ({ currentIndex: newValue })),
   recommendations: [],
   setRecommendations: (newValue) => set(() => ({ recommendations: newValue })),
+  basedOnDefaultParameter: false,
 }));

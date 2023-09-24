@@ -11,13 +11,6 @@ services:
     environment:
       POSTGRES_PASSWORD: example
     volumes:
-      - mi_tinder_db_production:/var/lib/postgresql/data
-
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8080:8080
-
+      - rcmmndr_production:/var/lib/postgresql/data
 volumes:
-  mi_tinder_db_production:
+  rcmmndr_production:

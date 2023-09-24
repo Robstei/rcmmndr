@@ -42,7 +42,6 @@ model User {
     image          String?
     accounts       Account[]
     sessions       Session[]
-    likes          Like[]
     savedTracks    Track[]
     recomendations Recommendation[]
 }
@@ -56,16 +55,18 @@ model VerificationToken {
 }
 
 model Track {
-    id            String         @id
-    trackFeatures TrackFeatures?
-    trackAnalysis TrackAnalysis?
-    artists       Artist[]
-    users         User[]
-    likes         Like[]
+    id             String           @id
+    name           String
+    trackFeatures  TrackFeatures?
+    trackAnalysis  TrackAnalysis?
+    artists        Artist[]
+    users          User[]
+    recommendation Recommendation[]
 }
 
 model Artist {
     id     String   @id
+    name   String
     genres String[]
     track  Track[]
 }
@@ -127,21 +128,21 @@ model TrackAnalysis {
 }
 
 model Bars {
-    id            String        @id @default(cuid())
-    start         Float
-    duration      Float
-    confidence    Float
-    trackAnalysis TrackAnalysis @relation(fields: [trackId], references: [id], onDelete: Cascade)
-    trackId       String
+    id              String        @id @default(cuid())
+    start           Float
+    duration        Float
+    confidence      Float
+    trackAnalysis   TrackAnalysis @relation(fields: [trackAnalysisId], references: [id], onDelete: Cascade)
+    trackAnalysisId String
 }
 
 model Beats {
-    id            String        @id @default(cuid())
-    start         Float
-    duration      Float
-    confidence    Float
-    trackAnalysis TrackAnalysis @relation(fields: [trackId], references: [id], onDelete: Cascade)
-    trackId       String
+    id              String        @id @default(cuid())
+    start           Float
+    duration        Float
+    confidence      Float
+    trackAnalysis   TrackAnalysis @relation(fields: [trackAnalysisId], references: [id], onDelete: Cascade)
+    trackAnalysisId String
 }
 
 model Sections {
@@ -158,8 +159,8 @@ model Sections {
     mode_confidence           Float
     time_signature            Int
     time_signature_confidence Float
-    trackAnalysis             TrackAnalysis @relation(fields: [trackId], references: [id], onDelete: Cascade)
-    trackId                   String
+    trackAnalysis             TrackAnalysis @relation(fields: [trackAnalysisId], references: [id], onDelete: Cascade)
+    trackAnalysisId           String
 }
 
 model Segments {
@@ -173,26 +174,22 @@ model Segments {
     loudness_end      Int
     pitches           Float[]
     timbre            Float[]
-    trackAnalysis     TrackAnalysis @relation(fields: [trackId], references: [id], onDelete: Cascade)
-    trackId           String
+    trackAnalysis     TrackAnalysis @relation(fields: [trackAnalysisId], references: [id], onDelete: Cascade)
+    trackAnalysisId   String
 }
 
 model Tatums {
-    id            String        @id @default(cuid())
-    start         Float
-    duration      Float
-    confidence    Float
-    trackAnalysis TrackAnalysis @relation(fields: [trackId], references: [id], onDelete: Cascade)
-    trackId       String
+    id              String        @id @default(cuid())
+    start           Float
+    duration        Float
+    confidence      Float
+    trackAnalysis   TrackAnalysis @relation(fields: [trackAnalysisId], references: [id], onDelete: Cascade)
+    trackAnalysisId String
 }
 
 model Like {
     id              String         @id @default(cuid())
-    track           Track          @relation(fields: [trackId], references: [id], onDelete: Cascade)
-    trackId         String
     liked           Boolean
-    user            User           @relation(fields: [userId], references: [id], onDelete: Cascade)
-    userId          String
     timeStamp       DateTime
     recomendation   Recommendation @relation(fields: [recomendationId], references: [id])
     recomendationId String         @unique
@@ -201,25 +198,26 @@ model Like {
 model Recommendation {
     id                     String   @id @default(cuid())
     like                   Like?
-    likeId                 String?
     user                   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId                 String
+    track                  Track    @relation(fields: [trackId], references: [id], onDelete: Cascade)
+    trackId                String
     basedOnDefaultValues   Boolean
     seedArtists            String[]
     seedGenres             String[]
     seedTracks             String[]
-    targetAcousticness     Float
-    targetDanceability     Float
-    targetDuration_ms      Int
-    targetEnergy           Float
-    targetEnstrumentalness Float
-    targetKey              Int
-    targetLiveness         Float
-    targetLoudness         Float
-    targetMode             Int
-    targetPopularity       Int
-    targetSpeechiness      Float
-    targetTempo            Float
-    targetTime_signature   Int
-    targetValence          Float
+    targetAcousticness     Float?
+    targetDanceability     Float?
+    targetDuration_ms      Int?
+    targetEnergy           Float?
+    targetEnstrumentalness Float?
+    targetKey              Int?
+    targetLiveness         Float?
+    targetLoudness         Float?
+    targetMode             Int?
+    targetPopularity       Int?
+    targetSpeechiness      Float?
+    targetTempo            Float?
+    targetTime_signature   Int?
+    targetValence          Float?
 }

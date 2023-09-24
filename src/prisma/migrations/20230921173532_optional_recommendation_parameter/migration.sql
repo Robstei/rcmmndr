@@ -1,0 +1,15 @@
+-- AlterTable
+ALTER TABLE "Recommendation" ALTER COLUMN "targetAcousticness" DROP NOT NULL,
+ALTER COLUMN "targetDanceability" DROP NOT NULL,
+ALTER COLUMN "targetDuration_ms" DROP NOT NULL,
+ALTER COLUMN "targetEnergy" DROP NOT NULL,
+ALTER COLUMN "targetEnstrumentalness" DROP NOT NULL,
+ALTER COLUMN "targetKey" DROP NOT NULL,
+ALTER COLUMN "targetLiveness" DROP NOT NULL,
+ALTER COLUMN "targetLoudness" DROP NOT NULL,
+ALTER COLUMN "targetMode" DROP NOT NULL,
+ALTER COLUMN "targetPopularity" DROP NOT NULL,
+ALTER COLUMN "targetSpeechiness" DROP NOT NULL,
+ALTER COLUMN "targetTempo" DROP NOT NULL,
+ALTER COLUMN "targetTime_signature" DROP NOT NULL,
+ALTER COLUMN "targetValence" DROP NOT NULL;
