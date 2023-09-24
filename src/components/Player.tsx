@@ -100,7 +100,7 @@ function Player({ session }: { session: Session }) {
             <div className="flex items-center mt-5">
               <input className="w-10 h-10" type="checkbox" id="playlist" />
               <label className="ml-5" htmlFor="playlist">
-                Add Liked Song to Playlist called Fancy App Name
+                Add liked songs to playlist called Rcmmndr
               </label>
             </div>
           </div>

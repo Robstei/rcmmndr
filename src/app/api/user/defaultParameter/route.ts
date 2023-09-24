@@ -5,6 +5,7 @@ import { NextResponse } from "next/server";
 import { RecommendationBody } from "@/schemas/schemas";
 import { genres } from "@/lib/spotifyGenreSeedsBackup";
 
+export const dynamic = "force-dynamic";
 export async function GET() {
   try {
     const session = await getServerSession(authOptions);

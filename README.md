@@ -21,7 +21,8 @@ Damit werden zwei Ziele verfolgt, welche in Zukunft weiter ausgebaut werden kön
 - "npm run dev:docker:build" ausführen
   Das frontend ist auf http://localhost:3000 verfügbar und die Datenbank kann über http://localhost:8080 mittels adminer erreicht werden
 ### Production
-- "npm run prod:docker" ausführen
+- Analog zu Developement
+- "npm run prod:docker" ausführen (statt "npm run dev:docker:build")
 
 ## Technische Details
 

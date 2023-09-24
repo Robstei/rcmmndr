@@ -10,6 +10,8 @@ import {
 import { prismaClient } from "@/prisma/prismaClient";
 import { Prisma } from "@prisma/client";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   try {
     console.time(`generateProfile`);
