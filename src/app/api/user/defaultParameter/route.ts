@@ -2,7 +2,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { prismaClient } from "@/prisma/prismaClient";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
-import { AvailableGenres, RecommendationBody } from "@/schemas/schemas";
+import { RecommendationBody } from "@/schemas/schemas";
 import { genres } from "@/lib/spotifyGenreSeedsBackup";
 
 export async function GET() {

@@ -35,7 +35,10 @@ export async function POST(request: NextRequest) {
     timeSignature,
     valence,
   } = parsedBody.parameter.values;
-  const { trackId, ...trackFeaturesWithoutTrackId } = parsedBody.trackFeatures;
+  const {
+    trackId, // eslint-disable-line @typescript-eslint/no-unused-vars
+    ...trackFeaturesWithoutTrackId
+  } = parsedBody.trackFeatures;
   await prismaClient.like.create({
     data: {
       liked: parsedBody.like,

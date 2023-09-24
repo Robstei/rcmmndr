@@ -229,7 +229,10 @@ async function saveTrackWithFeatures(
   await prismaClient.artist.createMany({ data: artists, skipDuplicates: true });
   const inputs: Prisma.TrackCreateInput[] = [];
   for (const track of trackWithFeauture) {
-    const { trackId, ...featuresWithoutTrackId } = track.trackFeatureData;
+    const {
+      trackId, // eslint-disable-line @typescript-eslint/no-unused-vars
+      ...featuresWithoutTrackId
+    } = track.trackFeatureData;
     const trackCreateInput: Prisma.TrackCreateInput = {
       id: track.id,
       name: track.name,
