@@ -26,7 +26,7 @@ Damit werden zwei Ziele verfolgt, welche in Zukunft weiter ausgebaut werden kön
 
 ## Technische Details
 
-Die Applikation nutzt folgende Technoligien:
+Die Applikation nutzt folgende Technologien:
 -  [Next.js](https://nextjs.org/) für Front- und Backend
 -  [TypeScript](https://www.typescriptlang.org/)
 -  [Postgres](https://www.postgresql.org/) als Datenbank
