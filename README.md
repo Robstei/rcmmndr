@@ -1,6 +1,6 @@
 # Rcmmndr
 
-Ein Projekt von Alexander Bergmann (858200) & Robin Steil (899876) für das Modul Musikinformatik von Prof. Dr. Jochen Steffens an der Hochschule Düsselorf.
+Ein Projekt von Alexander Bergmann & Robin Steil für das Modul Musikinformatik von Prof. Dr. Jochen Steffens an der Hochschule Düsselorf.
 
 ## Übersicht & Ziele
 
