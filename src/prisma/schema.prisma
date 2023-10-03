@@ -221,3 +221,9 @@ model Recommendation {
     targetTime_signature   Int?
     targetValence          Float?
 }
+
+model Playlist {
+    id                String @id @default(cuid())
+    spotifyPlaylistId String @unique
+    userId            String @unique
+}

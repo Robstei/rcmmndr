@@ -250,4 +250,5 @@ export const LikeBody = z.object({
   like: z.boolean(),
   timeStamp: z.string().pipe(z.coerce.date()),
   track: Track,
+  saveToPlaylist: z.boolean(),
 });

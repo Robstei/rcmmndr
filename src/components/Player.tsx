@@ -22,6 +22,7 @@ function Player({ session }: { session: Session }) {
   const [currentTrack, setCurrentTrack] = useState<WebPlaybackTrack>();
   const [volume, setVolume] = useState(0.1);
   const recommendationParameterStore = useRecommendationParameterStore();
+  const [saveLikeToPlaylist, setSaveLikeToPlaylist] = useState(true);
 
   useEffect(() => {
     setupSpotifyPlayer(
@@ -56,13 +57,21 @@ function Player({ session }: { session: Session }) {
             />
           </div>
           <div className="flex justify-around items-center mt-5">
-            <LikeButton className="w-1/5" like={false} />
+            <LikeButton
+              className="w-1/5"
+              like={false}
+              saveToPlaylist={saveLikeToPlaylist}
+            />
             <div>
               <div>{currentTrack?.name}</div>
 
               <div>{currentTrack?.artists[0].name}</div>
             </div>
-            <LikeButton className="w-1/5" like={true} />
+            <LikeButton
+              className="w-1/5"
+              like={true}
+              saveToPlaylist={saveLikeToPlaylist}
+            />
           </div>
           <div className="mt-5 flex items-center">
             <PrimaryButton
@@ -98,9 +107,16 @@ function Player({ session }: { session: Session }) {
           <div className="mt-10">
             <div className="text-4xl font-bold">Generel</div>
             <div className="flex items-center mt-5">
-              <input className="w-10 h-10" type="checkbox" id="playlist" />
+              <input
+                className="w-10 h-10"
+                type="checkbox"
+                checked={saveLikeToPlaylist}
+                onChange={() => {
+                  setSaveLikeToPlaylist(!saveLikeToPlaylist);
+                }}
+              />
               <label className="ml-5" htmlFor="playlist">
-                Add liked songs to playlist called Rcmmndr
+                Add liked songs to playlist called rcmmndr
               </label>
             </div>
           </div>
