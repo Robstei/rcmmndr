@@ -9,9 +9,11 @@ import { useSession } from "next-auth/react";
 export function LikeButton({
   like,
   className,
+  saveToPlaylist,
 }: {
   like: boolean;
   className?: string;
+  saveToPlaylist: boolean;
 }) {
   const { getRecommendationBody } = useRecommendationParameterStore();
   const session = useSession();
@@ -21,7 +23,8 @@ export function LikeButton({
       useRecommendationStore.getState();
 
     const likeBody: LikeBody = {
-      like: like,
+      like,
+      saveToPlaylist,
       timeStamp: new Date(),
       track: recommendations[currentIndex],
       parameter: getRecommendationBody(),
