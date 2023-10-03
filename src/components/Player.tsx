@@ -22,7 +22,7 @@ function Player({ session }: { session: Session }) {
   const [currentTrack, setCurrentTrack] = useState<WebPlaybackTrack>();
   const [volume, setVolume] = useState(0.1);
   const recommendationParameterStore = useRecommendationParameterStore();
-  const [saveLikeToPlaylist, setSaveLikeToPlaylist] = useState(true);
+  const [saveLikeToPlaylist, setSaveLikeToPlaylist] = useState(false);
 
   useEffect(() => {
     setupSpotifyPlayer(

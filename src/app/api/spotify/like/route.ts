@@ -66,15 +66,11 @@ async function saveLikedSongToPlaylist(songUri: string, session: Session) {
     });
   }
 
-  const result = await fetch(
-    `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
-    {
-      method: "POST",
-      body: JSON.stringify({ uris: [songUri] }),
-      headers: { Authorization: `Bearer ${session.user.spotifyAccessToken}` },
-    }
-  );
-  console.log(await result.json());
+  await fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
+    method: "POST",
+    body: JSON.stringify({ uris: [songUri] }),
+    headers: { Authorization: `Bearer ${session.user.spotifyAccessToken}` },
+  });
 }
 
 async function saveLikeToDatabase(likeBody: LikeBody, userId: string) {
