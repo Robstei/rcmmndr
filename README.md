@@ -1,6 +1,6 @@
 # Rcmmndr
 
-Ein Projekt von Alexander Bergmann (858200) & Robin Steil (899876) für das Modul Musikinformatik von Prof. Dr. Jochen Steffens an der Hochschule Düsselorf.
+Ein Projekt von Alexander Bergmann & Robin Steil für das Modul Musikinformatik von Prof. Dr. Jochen Steffens an der Hochschule Düsselorf.
 
 ## Übersicht & Ziele
 
@@ -27,7 +27,7 @@ Damit werden zwei Ziele verfolgt, welche in Zukunft weiter ausgebaut werden kön
 
 ## Technische Details
 
-Die Applikation nutzt folgende Technoligien:
+Die Applikation nutzt folgende Technologien:
 -  [Next.js](https://nextjs.org/) für Front- und Backend
 -  [TypeScript](https://www.typescriptlang.org/)
 -  [Postgres](https://www.postgresql.org/) als Datenbank
