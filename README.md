@@ -17,6 +17,7 @@ Damit werden zwei Ziele verfolgt, welche in Zukunft weiter ausgebaut werden kön
 - "npm install" und "npm run generate" ausführen
 - docker installieren
 - unter https://developer.spotify.com/dashboard eine Spotify App erstellen.
+- als Redirect URI folgende URL eintragen: "http://localhost:3000/api/auth/callback/spotify"
 - Die Datei .env.example zu .env.local umbenennnen und dort die Werte für SPOTIFY_CLIENT_ID und SPOTIFY_CLIENT_SECRET einfügen
 - "npm run dev:docker:build" ausführen
   Das frontend ist auf http://localhost:3000 verfügbar und die Datenbank kann über http://localhost:8080 mittels adminer erreicht werden

@@ -17,5 +17,5 @@ export default function Page() {
   useEffect(() => {
     if (profileGenerated) redirect("/");
   }, [profileGenerated]);
-  return <h1>generating Profie</h1>;
+  return <h1>generating Profile</h1>;
 }
